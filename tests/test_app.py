@@ -164,7 +164,9 @@ class TestUiGate:
             app_client.state.daemon.settings.daemon_url = f"http://127.0.0.1:{port}"
             app_client.state.daemon.address = app_client.state.daemon.settings.address
             app_client.state.settings.ui_token = "webgate"
-            # without the token: refused, health stays open
+            # without the token: the shell still serves, the
+            # gated endpoints refuse, health stays open
+            assert _get(app_client, "/").status_code == 200
             assert _get(app_client, "/api/workspaces").status_code == 401
             assert _get(app_client, "/api/health").status_code == 200
             # with the token: through

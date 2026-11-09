@@ -30,7 +30,12 @@ async def ui_gate(request: Request, call_next):
     set: browsers carry the token after one prompt; the health
     probe stays open (it answers nothing the token protects)."""
     token = request.app.state.settings.ui_token
-    if not token or request.url.path == "/api/health":
+    path = request.url.path
+    if not token or path == "/api/health" or not path.startswith("/api/"):
+        # the shell and its assets load ungated — the page itself
+        # prompts for the token; every proxy endpoint answers
+        # only behind it, and /api/health stays open for the
+        # banner's reachability check
         return await call_next(request)
     header = request.headers.get("authorization", "")
     supplied = header[7:] if header.lower().startswith("bearer ") else ""
