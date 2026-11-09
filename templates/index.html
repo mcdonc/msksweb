@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>msksweb</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="/static/logo.svg" alt="" width="26" height="26">
+        <span class="brand-name">msksweb</span>
+      </div>
+      <nav class="nav">
+        <a class="nav-item active" id="nav-workspaces" href="#/workspaces">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="6" rx="1.5"/><rect x="3" y="14" width="18" height="6" rx="1.5"/><circle cx="7" cy="7" r="0.6" fill="currentColor"/><circle cx="7" cy="17" r="0.6" fill="currentColor"/></svg>
+          Workspaces
+        </a>
+        <a class="nav-item soon" href="https://github.com/mcdonc/msksweb/issues/6" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2.5"/><circle cx="8.5" cy="8.5" r="1.8"/><path d="m21 15-5-5L5 21"/></svg>
+          Images <span class="tag">soon</span>
+        </a>
+        <a class="nav-item soon" href="https://github.com/mcdonc/msksweb/issues/8" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5.5" rx="9" ry="2.8"/><path d="M3 5.5v13c0 1.5 4 2.8 9 2.8s9-1.3 9-2.8v-13"/><path d="M3 12c0 1.5 4 2.8 9 2.8s9-1.3 9-2.8"/></svg>
+          Storage <span class="tag">soon</span>
+        </a>
+        <a class="nav-item soon" href="https://github.com/mcdonc/msksweb/issues/10" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+          Secrets <span class="tag">soon</span>
+        </a>
+        <a class="nav-item soon" href="https://github.com/mcdonc/msksweb/issues/7" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s6 5.2 6 10a6 6 0 0 1-12 0c0-4.8 6-10 6-10z"/></svg>
+          Egress <span class="tag">soon</span>
+        </a>
+      </nav>
+      <div class="sidebar-foot">
+        <button class="ghost-btn" id="theme-toggle" title="Toggle theme">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        </button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <h1 id="page-title">Workspaces</h1>
+        <div class="topbar-right">
+          <div class="health-pill" id="health-pill" title="daemon health">
+            <span class="health-dot"></span>
+            <span id="health-text">probing…</span>
+          </div>
+          <button class="ghost-btn" id="json-toggle" title="Toggle the raw JSON document (msks ls --json)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4H6a2 2 0 0 0-2 2v4l-2 2 2 2v4a2 2 0 0 0 2 2h2"/><path d="M16 4h2a2 2 0 0 1 2 2v4l2 2-2 2v4a2 2 0 0 1-2 2h-2"/></svg>
+            <span>JSON</span>
+          </button>
+          <button class="ghost-btn" id="refresh-btn" title="Refresh now">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.6-6.3"/><path d="M21 3v6h-6"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <div class="banners" id="banners"></div>
+
+      <section class="view" id="view-workspaces">
+        <div class="stats" id="stats"></div>
+        <div class="card table-card" id="workspaces-card">
+          <div class="table-toolbar">
+            <div class="search-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+              <input id="search" type="search" placeholder="Filter by name, id, image, host…  ( / )" autocomplete="off">
+            </div>
+            <button class="primary-btn" id="create-btn" disabled
+                    title="The create dialog arrives with issue #3 — use `msks create` until then">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+              New workspace
+            </button>
+          </div>
+          <div id="table-area"></div>
+        </div>
+        <div class="card json-card" id="json-card" hidden>
+          <pre id="json-doc"></pre>
+        </div>
+        <div class="updated-line" id="updated-line"></div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="token-dialog">
+    <form method="dialog" class="token-form" id="token-form">
+      <h2>Unlock msksweb</h2>
+      <p>This deployment carries a UI token. Enter it once — it stays in this browser.</p>
+      <input type="password" id="token-input" placeholder="UI token" autofocus>
+      <div class="token-error" id="token-error"></div>
+      <div class="token-actions">
+        <button type="submit" class="primary-btn" id="token-submit">Unlock</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast"></div>
+  <script src="/static/app.js"></script>
+</body>
+</html>
